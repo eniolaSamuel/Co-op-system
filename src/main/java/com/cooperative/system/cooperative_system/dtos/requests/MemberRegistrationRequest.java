@@ -11,7 +11,9 @@ public class MemberRegistrationRequest {
     private String gender;
     private String email;
     private String maritalStatus;
-    private BankDetails bankDetails;
+    private String accountName;
+    private String accountNumber;
+    private String bankName;
     private String password;
 
 }
