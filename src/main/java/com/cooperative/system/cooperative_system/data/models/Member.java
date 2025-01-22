@@ -33,6 +33,8 @@ public class Member {
     @UpdateTimestamp
     private LocalDateTime updatedDate;
 
+    private String paystackCustomerId;
+
 
 }
 
