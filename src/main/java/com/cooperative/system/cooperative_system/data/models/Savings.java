@@ -2,11 +2,13 @@ package com.cooperative.system.cooperative_system.data.models;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import lombok.Data;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity
+@Data
 public class Savings {
     @Id
     private String id;
