@@ -94,7 +94,7 @@ public class PaystackServiceImpl implements PaystackService {
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.set("Authorization", "Bearer " + paystackSecretKey);
+        headers.set("Authorization", "Bearer " + PAYSTACK_SECRET_KEY);
 
         Map<String, Object> body = new HashMap<>();
         body.put("source", "balance");
@@ -105,7 +105,7 @@ public class PaystackServiceImpl implements PaystackService {
         HttpEntity<Map<String, Object>> entity = new HttpEntity<>(body, headers);
 
         return restTemplate.postForObject(
-                paystackBaseUrl + "/transfer",
+                PAYSTACK_API_URL + "/transfer",
                 entity,
                 PaystackTransactionResponse.class
         );
