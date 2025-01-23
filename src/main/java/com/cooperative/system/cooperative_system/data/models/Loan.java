@@ -1,17 +1,20 @@
 package com.cooperative.system.cooperative_system.data.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Data;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Data
 public class Loan {
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
 
     private String memberId;
     private String loanDescription;
@@ -24,6 +27,18 @@ public class Loan {
     private String loanStatus;
     private BigDecimal repaymentAmount;
 
+    @ElementCollection
+    @CollectionTable(name = "loan_repayments", joinColumns = @JoinColumn(name = "loan_id"))
+    private List<Repayment> repayments = new ArrayList<>();
 
+    @Embeddable
+    @Data
+    public static class Repayment {
+        private LocalDate date;
+        private BigDecimal amount;
+    }
 }
+
+
+
 
