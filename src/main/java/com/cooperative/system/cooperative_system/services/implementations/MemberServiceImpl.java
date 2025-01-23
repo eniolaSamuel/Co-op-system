@@ -1,4 +1,4 @@
-package com.cooperative.system.cooperative_system.services.impl;
+package com.cooperative.system.cooperative_system.services.implementations;
 
 import com.cooperative.system.cooperative_system.data.models.BankDetails;
 import com.cooperative.system.cooperative_system.data.models.Member;
