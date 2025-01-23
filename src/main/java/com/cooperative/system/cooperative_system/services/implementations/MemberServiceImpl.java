@@ -2,6 +2,7 @@ package com.cooperative.system.cooperative_system.services.implementations;
 
 import com.cooperative.system.cooperative_system.data.models.BankDetails;
 import com.cooperative.system.cooperative_system.data.models.Member;
+import com.cooperative.system.cooperative_system.data.models.enums.MemberStatus;
 import com.cooperative.system.cooperative_system.dtos.requests.MemberRegistrationRequest;
 import com.cooperative.system.cooperative_system.dtos.requests.MemberUpdateRequest;
 import com.cooperative.system.cooperative_system.data.repositories.MemberRepository;
@@ -30,6 +31,7 @@ public class MemberServiceImpl implements MemberService {
         member.setEmail(request.getEmail());
         member.setMaritalStatus(request.getMaritalStatus());
         member.setPassword(passwordEncoder.encode(request.getPassword()));
+        member.setStatus(MemberStatus.PENDING);
 
         BankDetails bankDetails = new BankDetails();
         bankDetails.setAccountName(request.getAccountName());
@@ -82,7 +84,7 @@ public class MemberServiceImpl implements MemberService {
     public Member approveMember(String memberId) {
         Member member = getMemberById(memberId);
         if (member != null) {
-            member.setStatus("ACTIVE");
+            member.setStatus(MemberStatus.ACTIVE);
             return memberRepository.save(member);
         }
         return null;
@@ -92,7 +94,7 @@ public class MemberServiceImpl implements MemberService {
     public Member suspendMember(String memberId) {
         Member member = getMemberById(memberId);
         if (member != null) {
-            member.setStatus("SUSPENDED");
+            member.setStatus(MemberStatus.SUSPENDED);
             return memberRepository.save(member);
         }
         return null;
@@ -100,10 +102,16 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public List<Member> getPendingMembers() {
-        return memberRepository.findByStatus("PENDING");
+        return memberRepository.findByStatus(MemberStatus.PENDING);
     }
 
 }
+
+
+
+
+
+
 
 
 
