@@ -11,7 +11,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.UUID;
 
 @Service
 public class MemberServiceImpl implements MemberService {
@@ -66,17 +65,45 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public Member getMemberById(String memberId) {
-        return memberRepository.findById(UUID.fromString(memberId)).orElse(null);
+        return memberRepository.findById(memberId).orElse(null);
     }
 
     @Override
     public void deleteMember(String memberId) {
-        memberRepository.deleteById(UUID.fromString(memberId));
+        memberRepository.deleteById(memberId);
     }
 
     @Override
     public List<Member> getAllMembers() {
         return memberRepository.findAll();
     }
+
+    @Override
+    public Member approveMember(String memberId) {
+        Member member = getMemberById(memberId);
+        if (member != null) {
+            member.setStatus("ACTIVE");
+            return memberRepository.save(member);
+        }
+        return null;
+    }
+
+    @Override
+    public Member suspendMember(String memberId) {
+        Member member = getMemberById(memberId);
+        if (member != null) {
+            member.setStatus("SUSPENDED");
+            return memberRepository.save(member);
+        }
+        return null;
+    }
+
+    @Override
+    public List<Member> getPendingMembers() {
+        return memberRepository.findByStatus("PENDING");
+    }
+
 }
+
+
 

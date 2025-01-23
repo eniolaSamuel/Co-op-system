@@ -13,8 +13,11 @@ public interface MemberService {
     Member getMemberById(String memberId);
     void deleteMember(String memberId);
     List<Member> getAllMembers();
-    Member approveMember(UUID memberId);
-    Member suspendMember(UUID memberId);
+
+    Member approveMember(String memberId);
+
+    Member suspendMember(String memberId);
+
     List<Member> getPendingMembers();
 }
 

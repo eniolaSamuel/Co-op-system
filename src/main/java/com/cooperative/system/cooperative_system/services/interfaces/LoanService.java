@@ -10,8 +10,11 @@ import java.util.List;
 import java.util.UUID;
 
 public interface LoanService {
-    Loan applyForLoan(UUID memberId, LoanApplicationRequest request);
-    List<Loan> getMemberLoans(UUID memberId);
+
+    Loan applyForLoan(String memberId, LoanApplicationRequest request);
+
+    List<Loan> getMemberLoans(String memberId);
+
     Loan approveLoan(UUID loanId);
     Loan rejectLoan(UUID loanId);
     Loan getLoanById(UUID loanId);
