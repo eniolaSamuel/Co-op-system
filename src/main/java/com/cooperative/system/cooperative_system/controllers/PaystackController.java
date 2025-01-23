@@ -3,6 +3,7 @@ package com.cooperative.system.cooperative_system.controllers;
 
 import com.cooperative.system.cooperative_system.dtos.requests.AddCardRequest;
 import com.cooperative.system.cooperative_system.dtos.responses.PaystackTransactionResponse;
+import com.cooperative.system.cooperative_system.exceptions.CoopException;
 import com.cooperative.system.cooperative_system.services.interfaces.PaystackService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -33,6 +34,11 @@ public class PaystackController {
     public ResponseEntity<PaystackTransactionResponse> initiateWithdrawal(@PathVariable UUID memberId, @RequestParam BigDecimal amount) {
         PaystackTransactionResponse response = paystackService.initiateWithdrawal(memberId, amount);
         return ResponseEntity.ok(response);
+    }
+    @GetMapping("/verify/{reference}")
+    public ResponseEntity<Boolean> verifyTransaction(@PathVariable String reference) throws CoopException {
+        boolean isVerified = paystackService.verifyTransaction(reference);
+        return ResponseEntity.ok(isVerified);
     }
 }
 
