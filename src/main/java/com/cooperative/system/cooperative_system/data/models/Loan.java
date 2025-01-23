@@ -27,7 +27,7 @@ public class Loan {
     private int loanDuration;
 
     @Enumerated(EnumType.STRING)
-    private LoanStatus status;
+    private LoanStatus loanStatus;
 
     private BigDecimal repaymentAmount;
 

@@ -2,6 +2,7 @@ package com.cooperative.system.cooperative_system.services.implementations;
 
 import com.cooperative.system.cooperative_system.data.models.Loan;
 import com.cooperative.system.cooperative_system.data.models.Member;
+import com.cooperative.system.cooperative_system.data.models.enums.LoanStatus;
 import com.cooperative.system.cooperative_system.data.repositories.LoanRepository;
 import com.cooperative.system.cooperative_system.data.repositories.MemberRepository;
 import com.cooperative.system.cooperative_system.dtos.requests.LoanApplicationRequest;
@@ -35,10 +36,11 @@ public class LoanServiceImpl implements LoanService {
         loan.setLoanAmount(request.getLoanAmount());
         loan.setDateRequested(LocalDate.now());
         loan.setLoanDuration(request.getLoanDuration());
-        loan.setLoanStatus("PENDING");
+        loan.setLoanStatus(LoanStatus.valueOf("PENDING"));
 
         return loanRepository.save(loan);
     }
+
 
     @Override
     public List<Loan> getMemberLoans(String memberId) {
@@ -48,10 +50,9 @@ public class LoanServiceImpl implements LoanService {
     @Override
     public Loan approveLoan(UUID loanId) {
         Loan loan = getLoanById(loanId);
-        loan.setLoanStatus("APPROVED");
+        loan.setLoanStatus(LoanStatus.valueOf("APPROVED"));
         loan.setDateApproved(LocalDate.now());
         loan.setDueDate(LocalDate.now().plusMonths(loan.getLoanDuration()));
-        // Calculate repayment amount (you may want to implement a more sophisticated calculation)
         loan.setRepaymentAmount(loan.getLoanAmount().multiply(BigDecimal.valueOf(1.1)));
         return loanRepository.save(loan);
     }
@@ -59,7 +60,7 @@ public class LoanServiceImpl implements LoanService {
     @Override
     public Loan rejectLoan(UUID loanId) {
         Loan loan = getLoanById(loanId);
-        loan.setLoanStatus("REJECTED");
+        loan.setLoanStatus(LoanStatus.valueOf("REJECTED"));
         loan.setDateRejected(LocalDate.now());
         return loanRepository.save(loan);
     }
@@ -88,7 +89,7 @@ public class LoanServiceImpl implements LoanService {
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
 
         if (totalRepaid.compareTo(loan.getRepaymentAmount()) >= 0) {
-            loan.setLoanStatus("PAID");
+            loan.setLoanStatus(LoanStatus.valueOf("PAID"));
         }
 
         return loanRepository.save(loan);
@@ -99,6 +100,9 @@ public class LoanServiceImpl implements LoanService {
         Loan loan = getLoanById(loanId);
         return loan.getRepayments();
     }
+
 }
+
+
 
 
