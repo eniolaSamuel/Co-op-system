@@ -5,6 +5,7 @@ import com.cooperative.system.cooperative_system.dtos.requests.MemberRegistratio
 import com.cooperative.system.cooperative_system.dtos.requests.MemberUpdateRequest;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface MemberService {
     Member registerMember(MemberRegistrationRequest request);
@@ -12,5 +13,10 @@ public interface MemberService {
     Member getMemberById(String memberId);
     void deleteMember(String memberId);
     List<Member> getAllMembers();
+    Member approveMember(UUID memberId);
+    Member suspendMember(UUID memberId);
+    List<Member> getPendingMembers();
 }
+
+
 
