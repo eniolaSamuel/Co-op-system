@@ -1,8 +1,7 @@
 package com.cooperative.system.cooperative_system.data.models;
 
-import jakarta.persistence.Embedded;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import com.cooperative.system.cooperative_system.data.models.enums.MemberStatus;
+import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -26,6 +25,10 @@ public class Member {
     private BankDetails bankDetails;
 
     private String password;
+
+
+    @Enumerated(EnumType.STRING)
+    private MemberStatus status;
 
     @CreationTimestamp
     private LocalDateTime createdDate;

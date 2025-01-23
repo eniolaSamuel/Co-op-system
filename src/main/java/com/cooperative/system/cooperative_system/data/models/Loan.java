@@ -1,5 +1,6 @@
 package com.cooperative.system.cooperative_system.data.models;
 
+import com.cooperative.system.cooperative_system.data.models.enums.LoanStatus;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -24,7 +25,10 @@ public class Loan {
     private LocalDate dateRejected;
     private LocalDate dueDate;
     private int loanDuration;
-    private String loanStatus;
+
+    @Enumerated(EnumType.STRING)
+    private LoanStatus status;
+
     private BigDecimal repaymentAmount;
 
     @ElementCollection
@@ -38,6 +42,9 @@ public class Loan {
         private BigDecimal amount;
     }
 }
+
+
+
 
 
 
