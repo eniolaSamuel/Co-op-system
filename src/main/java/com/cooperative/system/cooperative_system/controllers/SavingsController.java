@@ -4,6 +4,7 @@ import com.cooperative.system.cooperative_system.data.models.Savings;
 import com.cooperative.system.cooperative_system.data.models.Transaction;
 import com.cooperative.system.cooperative_system.dtos.requests.DepositRequest;
 import com.cooperative.system.cooperative_system.dtos.requests.WithdrawalRequest;
+import com.cooperative.system.cooperative_system.exceptions.CoopException;
 import com.cooperative.system.cooperative_system.services.interfaces.SavingsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -25,12 +26,12 @@ public class SavingsController {
     }
 
     @PostMapping("/{memberId}/deposit")
-    public ResponseEntity<Transaction> deposit(@PathVariable UUID memberId, @RequestBody DepositRequest request) {
+    public ResponseEntity<Transaction> deposit(@PathVariable UUID memberId, @RequestBody DepositRequest request) throws CoopException {
         return ResponseEntity.ok(savingsService.deposit(memberId, request));
     }
 
     @PostMapping("/{memberId}/withdraw")
-    public ResponseEntity<Transaction> withdraw(@PathVariable UUID memberId, @RequestBody WithdrawalRequest request) {
+    public ResponseEntity<Transaction> withdraw(@PathVariable UUID memberId, @RequestBody WithdrawalRequest request) throws CoopException {
         return ResponseEntity.ok(savingsService.withdraw(memberId, request));
     }
 
