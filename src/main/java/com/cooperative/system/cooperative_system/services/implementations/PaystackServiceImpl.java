@@ -13,6 +13,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import static com.cooperative.system.cooperative_system.utils.AppUtil.PAYSTACK_API_URL;
+import static com.cooperative.system.cooperative_system.utils.AppUtil.PAYSTACK_SECRET_KEY;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
@@ -28,11 +30,7 @@ public class PaystackServiceImpl implements PaystackService {
     @Autowired
     private MemberRepository memberRepository;
 
-    @Value("${paystack.secret.key}")
-    private String paystackSecretKey;
 
-    @Value("${paystack.base.url}")
-    private String paystackBaseUrl;
 
     @Override
     public String addCard(UUID memberId, AddCardRequest request) {
@@ -41,7 +39,7 @@ public class PaystackServiceImpl implements PaystackService {
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.set("Authorization", "Bearer " + paystackSecretKey);
+        headers.set("Authorization", "Bearer " + PAYSTACK_SECRET_KEY);
 
         Map<String, Object> body = new HashMap<>();
         body.put("email", member.getEmail());
@@ -50,7 +48,7 @@ public class PaystackServiceImpl implements PaystackService {
         HttpEntity<Map<String, Object>> entity = new HttpEntity<>(body, headers);
 
         PaystackTransactionResponse response = restTemplate.postForObject(
-                paystackBaseUrl + "/transaction/initialize",
+                PAYSTACK_API_URL + "/transaction/initialize",
                 entity,
                 PaystackTransactionResponse.class
         );
@@ -71,7 +69,7 @@ public class PaystackServiceImpl implements PaystackService {
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.set("Authorization", "Bearer " + paystackSecretKey);
+        headers.set("Authorization", "Bearer " + PAYSTACK_SECRET_KEY);
 
         Map<String, Object> body = new HashMap<>();
         body.put("email", member.getEmail());
@@ -81,7 +79,7 @@ public class PaystackServiceImpl implements PaystackService {
         HttpEntity<Map<String, Object>> entity = new HttpEntity<>(body, headers);
 
         return restTemplate.postForObject(
-                paystackBaseUrl + "/transaction/initialize",
+                PAYSTACK_API_URL + "/transaction/initialize",
                 entity,
                 PaystackTransactionResponse.class
         );
