@@ -114,12 +114,12 @@ public class PaystackServiceImpl implements PaystackService {
     @Override
     public boolean verifyTransaction(String reference) {
         HttpHeaders headers = new HttpHeaders();
-        headers.set("Authorization", "Bearer " + paystackSecretKey);
+        headers.set("Authorization", "Bearer " + PAYSTACK_SECRET_KEY);
 
         HttpEntity<String> entity = new HttpEntity<>(headers);
 
         PaystackTransactionResponse response = restTemplate.getForObject(
-                paystackBaseUrl + "/transaction/verify/" + reference,
+                PAYSTACK_API_URL + "/transaction/verify/" + reference,
                 PaystackTransactionResponse.class,
                 entity
         );
