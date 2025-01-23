@@ -28,6 +28,12 @@ public class PaystackController {
         PaystackTransactionResponse response = paystackService.initiateDeposit(memberId, amount);
         return ResponseEntity.ok(response);
     }
+
+    @PostMapping("/withdraw/{memberId}")
+    public ResponseEntity<PaystackTransactionResponse> initiateWithdrawal(@PathVariable UUID memberId, @RequestParam BigDecimal amount) {
+        PaystackTransactionResponse response = paystackService.initiateWithdrawal(memberId, amount);
+        return ResponseEntity.ok(response);
+    }
 }
 
 
